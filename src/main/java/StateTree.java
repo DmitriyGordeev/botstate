@@ -1,4 +1,5 @@
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.TreeSet;
 
 class StateNode implements Comparable<StateNode> {
@@ -17,6 +18,17 @@ class StateNode implements Comparable<StateNode> {
     public void connect(String value) {
         StateNode node = new StateNode(value, this);
         nodes.add(node);
+    }
+
+    public StateNode find(String value) {
+        Iterator<StateNode> iterator = this.nodes.iterator();
+        while(iterator.hasNext()) {
+            StateNode node = iterator.next();
+            if(node.value.equalsIgnoreCase(value)) {
+                return node;
+            }
+        }
+        return null;
     }
 
     public int compareTo(StateNode other) {
