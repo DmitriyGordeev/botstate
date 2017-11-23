@@ -56,6 +56,7 @@ public class StateTreeTest {
         Assert.assertEquals(test_value, found.value);
     }
 
+
     @Test
     public void stateNode_find_null() {
         StateNode node = new StateNode("Value", null);
