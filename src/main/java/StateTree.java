@@ -4,9 +4,10 @@ import java.util.TreeSet;
 
 class StateNode implements Comparable<StateNode> {
 
-    public StateNode(String value, StateNode parent) {
+    public StateNode(String question, String answer, StateNode parent) {
         nodes = new TreeSet<StateNode>();
-        this.value = value;
+        this.question = question;
+        this.answer = answer;
         this.parent = parent;
     }
 
@@ -15,27 +16,36 @@ class StateNode implements Comparable<StateNode> {
         node.parent = this;
     }
 
-    public void connect(String value) {
-        StateNode node = new StateNode(value, this);
+    public void connect(String question, String answer) {
+        StateNode node = new StateNode(question, answer, this);
         nodes.add(node);
     }
 
-    public StateNode find(String value) {
+    public StateNode find(String question) {
         Iterator<StateNode> iterator = this.nodes.iterator();
         while(iterator.hasNext()) {
             StateNode node = iterator.next();
-            if(node.value.equalsIgnoreCase(value)) {
+            if(node.question.equalsIgnoreCase(question)) {
                 return node;
             }
         }
         return null;
     }
 
-    public int compareTo(StateNode other) {
-        return this.value.compareToIgnoreCase(other.value);
+    public String getAnswer(String answer) {
+        StateNode node = this.find(answer);
+        if(node == null) {
+            return "";
+        }
+        return node.answer;
     }
 
-    public String value;
+    public int compareTo(StateNode other) {
+        return this.question.compareToIgnoreCase(other.question);
+    }
+
+    public String question;
+    public String answer;
     public TreeSet<StateNode> nodes;
     public StateNode parent;
 }
