@@ -68,4 +68,30 @@ public class StateTreeTest {
         Assert.assertTrue(found == null);
     }
 
+
+    @Test
+    public void stateNode_findAnswer_notEmpty() {
+        StateNode node = new StateNode("Question", "Answer", null);
+
+        String test_question = "ChildQ";
+        node.connect(test_question, "ChildA");
+
+        String answer = node.findAnswer(test_question);
+        Assert.assertEquals("ChildA", answer);
+    }
+
+
+    @Test
+    public void stateNode_findAnswer_empty() {
+        StateNode node = new StateNode("Question", "Answer", null);
+
+        String test_question = "ChildQ";
+        node.connect(test_question, "ChildA");
+
+        String answer = node.findAnswer("Random Question");
+        Assert.assertEquals("", answer);
+    }
+
+
+
 }

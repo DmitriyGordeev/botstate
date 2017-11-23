@@ -32,7 +32,7 @@ class StateNode implements Comparable<StateNode> {
         return null;
     }
 
-    public String getAnswer(String answer) {
+    public String findAnswer(String answer) {
         StateNode node = this.find(answer);
         if(node == null) {
             return "";
