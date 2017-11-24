@@ -16,6 +16,12 @@ public class SimpleBot extends TelegramLongPollingBot {
         currentState = stateTree.root;
     }
 
+    public SimpleBot(String treeJsonString) throws JSONException {
+        stateTree = new StateTree("");
+        stateTree.parseTreeJson(treeJsonString);
+        currentState = stateTree.root;
+    }
+
     public void exp_createTree() {
         stateTree = new StateTree("Hello there. How are ya?)");
 
