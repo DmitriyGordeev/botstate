@@ -6,20 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-enum FileEncoding { CP1251, UTF8 }
-
 public class utest_Fileio {
 
-    public static FileEncoding encoding = FileEncoding.UTF8;
-
-    public static String setEncoding() {
-        switch(encoding) {
-            case CP1251:
-                return "cp1251";
-            default:
-                return "UTF-8";
-        }
-    }
+    public static FileEncoding test_encoding = FileEncoding.UTF8;
 
     @Test
     public void test_write_read_file() {
@@ -51,7 +40,7 @@ public class utest_Fileio {
 
         String filename = "encoding-test.txt";
 
-        PrintWriter writer = new PrintWriter(filename, setEncoding());
+        PrintWriter writer = new PrintWriter(filename, Fileio.setEncoding(test_encoding));
         writer.print("русские символы здесь!");
         writer.close();
     }
