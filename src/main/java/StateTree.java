@@ -32,8 +32,8 @@ class StateNode implements Comparable<StateNode> {
         return null;
     }
 
-    public String findAnswer(String answer) {
-        StateNode node = this.find(answer);
+    public String findAnswer(String question) {
+        StateNode node = this.find(question);
         if(node == null) {
             return "";
         }
