@@ -1,3 +1,4 @@
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -7,8 +8,13 @@ public class utest_SimpleBot {
     public void parseJsonExample() {
 
         String jsonString = "{\"value\":10}";
-        JSONObject json = new JSONObject(jsonString);
-        System.out.println(json.getInt("value"));
+        try {
+            JSONObject json = new JSONObject(jsonString);
+            System.out.println(json.getInt("value"));
+        }
+        catch(JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 

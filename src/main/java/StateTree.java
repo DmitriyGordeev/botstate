@@ -1,3 +1,7 @@
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -41,6 +45,20 @@ class StateNode implements Comparable<StateNode> {
         return node.answer;
     }
 
+    public StateNode parseJsonObject(JSONObject object) throws JSONException {
+
+        question = object.getString("userMessage");
+        answer = object.getString("botAnswer");
+
+        JSONArray nodes_array = object.getJSONArray("nodes");
+        for(Object node : nodes_array) {
+            StateNode sn = new StateNode("", "", null);
+            connect(sn.parseJsonObject((JSONObject) node));
+        }
+
+        return this;
+    }
+
     public int compareTo(StateNode other) {
         return this.question.compareToIgnoreCase(other.question);
     }
@@ -56,6 +74,20 @@ public class StateTree {
     public StateTree(String helloMessage) {
         root = new StateNode("", "", null);
         start = root.connect("/start", helloMessage);
+    }
+
+    public void parseTreeJson(String jsonString) throws JSONException {
+
+        JSONObject json = new JSONObject(jsonString);
+        start.question = json.getString("userMessage");
+        start.answer = json.getString("botAnswer");
+
+        JSONArray nodes_array = json.getJSONArray("nodes");
+        for(Object node : nodes_array) {
+
+        }
+
+
     }
 
     public StateNode root;
