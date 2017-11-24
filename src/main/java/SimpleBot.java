@@ -48,6 +48,9 @@ public class SimpleBot extends TelegramLongPollingBot {
             currentState = nextState;
             answer = currentState.answer;
         }
+        else {
+            answer = currentState.answer;
+        }
 
         // reset state if no children:
         if(currentState.nodes.isEmpty()) {
