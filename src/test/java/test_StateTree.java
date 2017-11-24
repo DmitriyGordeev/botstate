@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -6,12 +7,14 @@ public class test_StateTree {
     StateTree createTree() {
 
         StateTree tree = new StateTree("Hello there. How are ya?)");
-        StateNode node_A = new StateNode("qA", "aA", tree.root);
-        StateNode node_B = new StateNode("qB", "aB", tree.root);
-        StateNode node_C = new StateNode("qC", "aC", tree.root);
+
+
+        StateNode node_A = tree.root.connect("qA", "aA");
+        StateNode node_B = tree.root.connect("qB", "aB");
+        StateNode node_C = tree.root.connect("qC", "aC");
 
         node_B.connect("qD", "aD");
-        StateNode node_E =  new StateNode("qE", "aE", node_C);
+        StateNode node_E =  node_C.connect("qE", "aE");
         node_C.connect("qF", "aF");
         node_E.connect("qG", "aG");
 
@@ -20,9 +23,19 @@ public class test_StateTree {
 
 
     @Test
-    public void deep_correctAnswer() {
+    public void deep_correctAnswerState() {
 
         StateTree tree = createTree();
+        String user_question = "qC";
+
+        StateNode answer_state = tree.root.find(user_question);
+        Assert.assertFalse(answer_state == null);
+        Assert.assertEquals("aC", answer_state.answer);
+
+        String another_question = "qF";
+        StateNode another_answer = answer_state.find(another_question);
+        Assert.assertFalse(another_answer == null);
+        Assert.assertEquals("aF", another_answer.answer);
 
 
     }

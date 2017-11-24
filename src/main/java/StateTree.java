@@ -16,9 +16,10 @@ class StateNode implements Comparable<StateNode> {
         node.parent = this;
     }
 
-    public void connect(String question, String answer) {
+    public StateNode connect(String question, String answer) {
         StateNode node = new StateNode(question, answer, this);
         nodes.add(node);
+        return node;
     }
 
     public StateNode find(String question) {

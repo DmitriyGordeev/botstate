@@ -29,7 +29,12 @@ public class test_StateNode {
     public void stateNode_connect_value() {
 
         StateNode node = new StateNode("Question", "Answer", null);
-        node.connect("ChildQ", "ChildA");
+        StateNode childNode = node.connect("ChildQ", "ChildA");
+
+        Assert.assertFalse(childNode == null);
+        Assert.assertEquals("ChildQ", childNode.question);
+        Assert.assertEquals("ChildA", childNode.answer);
+        Assert.assertEquals(node, childNode.parent);
 
         Assert.assertEquals(1, node.nodes.size());
         StateNode child = null;
