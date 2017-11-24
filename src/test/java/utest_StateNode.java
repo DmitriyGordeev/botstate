@@ -3,7 +3,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
-public class test_StateNode {
+public class utest_StateNode {
 
     @Test
     public void stateNode_constructor() {

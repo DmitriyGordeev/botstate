@@ -10,11 +10,11 @@ public class SimpleBot extends TelegramLongPollingBot {
     private StateNode currentState;
 
     public SimpleBot() {
-        createTree();
+        exp_createTree();
         currentState = stateTree.root;
     }
 
-    public void createTree() {
+    public void exp_createTree() {
         stateTree = new StateTree("Hello there. How are ya?)");
 
         StateNode node_A = stateTree.start.connect("qA", "aA");
@@ -36,7 +36,6 @@ public class SimpleBot extends TelegramLongPollingBot {
             answer = currentState.answer;
         }
 
-
         // reset state if no children:
         if(currentState.nodes.isEmpty()) {
             currentState = stateTree.start;
@@ -45,6 +44,9 @@ public class SimpleBot extends TelegramLongPollingBot {
         return answer;
     }
 
+
+
+    /* ----------------------------------------------------------------------------- */
     /* default telegram stuff: */
 
     public void onUpdateReceived(Update update) {
