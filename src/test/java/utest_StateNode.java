@@ -103,7 +103,8 @@ public class utest_StateNode {
     public void parseJsonObject_exceptionOnNonValidJSON() {
         // TODO
     }
-    
+
+
     @Test
     public void parseJsonObject_correctRecursivity() {
         

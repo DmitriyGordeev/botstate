@@ -77,17 +77,8 @@ public class StateTree {
     }
 
     public void parseTreeJson(String jsonString) throws JSONException {
-
         JSONObject json = new JSONObject(jsonString);
-        start.question = json.getString("userMessage");
-        start.answer = json.getString("botAnswer");
-
-        JSONArray nodes_array = json.getJSONArray("nodes");
-        for(Object node : nodes_array) {
-
-        }
-
-
+        start.parseJsonObject(json);
     }
 
     public StateNode root;
