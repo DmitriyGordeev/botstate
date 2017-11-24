@@ -52,7 +52,8 @@ class StateNode implements Comparable<StateNode> {
 
 public class StateTree {
 
-    public StateTree() {
+    public StateTree(String helloMessage) {
+        root = new StateNode("/start", helloMessage, null);
     }
 
     public StateNode root;
