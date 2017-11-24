@@ -39,17 +39,17 @@ public class SimpleBot extends TelegramLongPollingBot {
             long chat_id = update.getMessage().getChatId();
 
 
-            String answer = "notnull";
-            if(currentState == null) {
-                answer = "currentState = null";
+            String answer = "not found";
+            StateNode nextState = currentState.find(user_message);
+            if(nextState != null) {
+                currentState = nextState;
+                answer = currentState.answer;
             }
-            else {
-                answer = "not found";
-                StateNode nextState = currentState.find(user_message);
-                if(nextState != null) {
-                    currentState = nextState;
-                    answer = currentState.answer;
-                }
+
+
+            // reset state if no children:
+            if(currentState.nodes.isEmpty()) {
+                currentState = stateTree.start;
             }
 
 
