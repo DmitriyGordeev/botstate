@@ -4,8 +4,29 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 
-
 public class SimpleBot extends TelegramLongPollingBot {
+
+    private StateTree stateTree;
+
+    public SimpleBot() {
+        test_exampleTree();
+    }
+
+    public void test_exampleTree() {
+        stateTree = new StateTree("Hello there. How are ya?)");
+
+        StateNode node_A = stateTree.root.connect("qA", "aA");
+        StateNode node_B = stateTree.root.connect("qB", "aB");
+        StateNode node_C = stateTree.root.connect("qC", "aC");
+
+        node_B.connect("qD", "aD");
+        StateNode node_E =  node_C.connect("qE", "aE");
+        node_C.connect("qF", "aF");
+        node_E.connect("qG", "aG");
+    }
+
+
+    /* default telegram stuff: */
 
     public void onUpdateReceived(Update update) {
 
@@ -15,9 +36,16 @@ public class SimpleBot extends TelegramLongPollingBot {
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
 
+
+            StateNode stateNode = stateTree.root.find(message_text);
+            String answer = "not found : (";
+            if(stateNode != null) {
+                answer = stateNode.answer;
+            }
+
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
-                    .setText(message_text);
+                    .setText(answer);
             try {
                 sendMessage(message); // Sending our message object to user
             } catch (TelegramApiException e) {
@@ -35,4 +63,5 @@ public class SimpleBot extends TelegramLongPollingBot {
     public String getBotToken() {
         return "415598199:AAHFEgk3tjCeQmZ7YDBmH90XC0PYN0PyuSw";
     }
+
 }
