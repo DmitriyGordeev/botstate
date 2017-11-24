@@ -42,7 +42,7 @@ public class SimpleBot extends TelegramLongPollingBot {
 
     public String traversing(String user_message) {
 
-        String answer = "not found";
+        String answer = "";
         StateNode nextState = currentState.find(user_message);
         if(nextState != null) {
             currentState = nextState;

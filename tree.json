@@ -1,0 +1,16 @@
+{
+  "userMessage":"/start",
+  "botAnswer":"Greetings from JSON!",
+  "nodes":[
+    {
+      "userMessage":"A",
+      "botAnswer":"JSON Answer: A",
+      "nodes":[]
+    },
+    {
+      "userMessage":"B",
+      "botAnswer":"JSON Answer: B",
+      "nodes":[]
+    }
+  ]
+}
