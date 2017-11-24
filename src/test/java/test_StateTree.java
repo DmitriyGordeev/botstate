@@ -8,9 +8,9 @@ public class test_StateTree {
 
         StateTree tree = new StateTree("Hello there. How are ya?)");
 
-        StateNode node_A = tree.root.connect("qA", "aA");
-        StateNode node_B = tree.root.connect("qB", "aB");
-        StateNode node_C = tree.root.connect("qC", "aC");
+        StateNode node_A = tree.start.connect("qA", "aA");
+        StateNode node_B = tree.start.connect("qB", "aB");
+        StateNode node_C = tree.start.connect("qC", "aC");
 
         node_B.connect("qD", "aD");
         StateNode node_E =  node_C.connect("qE", "aE");

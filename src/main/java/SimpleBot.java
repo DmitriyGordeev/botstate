@@ -7,17 +7,19 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 public class SimpleBot extends TelegramLongPollingBot {
 
     private StateTree stateTree;
+    private StateNode currentState;
 
     public SimpleBot() {
         createTree();
+        currentState = stateTree.root;
     }
 
     public void createTree() {
         stateTree = new StateTree("Hello there. How are ya?)");
 
-        StateNode node_A = stateTree.root.connect("qA", "aA");
-        StateNode node_B = stateTree.root.connect("qB", "aB");
-        StateNode node_C = stateTree.root.connect("qC", "aC");
+        StateNode node_A = stateTree.start.connect("qA", "aA");
+        StateNode node_B = stateTree.start.connect("qB", "aB");
+        StateNode node_C = stateTree.start.connect("qC", "aC");
 
         node_B.connect("qD", "aD");
         StateNode node_E =  node_C.connect("qE", "aE");
@@ -26,23 +28,30 @@ public class SimpleBot extends TelegramLongPollingBot {
     }
 
 
-
     /* default telegram stuff: */
 
     public void onUpdateReceived(Update update) {
 
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
-            // Set variables
-            String message_text = update.getMessage().getText();
+
+            String user_message = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
 
 
-            StateNode stateNode = stateTree.root.find(message_text);
-            String answer = "not found : (";
-            if(stateNode != null) {
-                answer = stateNode.answer;
+            String answer = "notnull";
+            if(currentState == null) {
+                answer = "currentState = null";
             }
+            else {
+                answer = "not found";
+                StateNode nextState = currentState.find(user_message);
+                if(nextState != null) {
+                    currentState = nextState;
+                    answer = currentState.answer;
+                }
+            }
+
 
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)

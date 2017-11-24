@@ -54,8 +54,10 @@ class StateNode implements Comparable<StateNode> {
 public class StateTree {
 
     public StateTree(String helloMessage) {
-        root = new StateNode("/start", helloMessage, null);
+        root = new StateNode("", "", null);
+        start = root.connect("/start", helloMessage);
     }
 
     public StateNode root;
+    public StateNode start;
 }
