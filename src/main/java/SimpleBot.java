@@ -27,6 +27,23 @@ public class SimpleBot extends TelegramLongPollingBot {
         node_E.connect("qG", "aG");
     }
 
+    public String traversing(String user_message) {
+
+        String answer = "not found";
+        StateNode nextState = currentState.find(user_message);
+        if(nextState != null) {
+            currentState = nextState;
+            answer = currentState.answer;
+        }
+
+
+        // reset state if no children:
+        if(currentState.nodes.isEmpty()) {
+            currentState = stateTree.start;
+        }
+
+        return answer;
+    }
 
     /* default telegram stuff: */
 
@@ -39,18 +56,8 @@ public class SimpleBot extends TelegramLongPollingBot {
             long chat_id = update.getMessage().getChatId();
 
 
-            String answer = "not found";
-            StateNode nextState = currentState.find(user_message);
-            if(nextState != null) {
-                currentState = nextState;
-                answer = currentState.answer;
-            }
-
-
-            // reset state if no children:
-            if(currentState.nodes.isEmpty()) {
-                currentState = stateTree.start;
-            }
+            // define the answer due to the stateTree:
+            String answer = traversing(user_message);
 
 
             SendMessage message = new SendMessage() // Create a message object object
