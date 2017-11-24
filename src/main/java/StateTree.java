@@ -53,7 +53,6 @@ class StateNode implements Comparable<StateNode> {
 public class StateTree {
 
     public StateTree() {
-
     }
 
     public StateNode root;

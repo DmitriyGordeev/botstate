@@ -3,7 +3,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
-public class StateTreeTest {
+public class test_StateNode {
 
     @Test
     public void stateNode_constructor() {
@@ -91,7 +91,6 @@ public class StateTreeTest {
         String answer = node.findAnswer("Random Question");
         Assert.assertEquals("", answer);
     }
-
 
 
 }
