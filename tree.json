@@ -5,7 +5,13 @@
     {
       "userMessage":"A",
       "botAnswer":"JSON Answer: A",
-      "nodes":[]
+      "nodes":[
+        {
+          "userMessage":"C",
+          "botAnswer":"JSON Answer: C",
+          "nodes":[]
+        }
+      ]
     },
     {
       "userMessage":"B",

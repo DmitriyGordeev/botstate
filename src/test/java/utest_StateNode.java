@@ -115,7 +115,13 @@ public class utest_StateNode {
                 "    {\n" +
                 "      \"userMessage\":\"A\",\n" +
                 "      \"botAnswer\":\"JSON Answer: A\",\n" +
-                "      \"nodes\":[]\n" +
+                "      \"nodes\":[\n" +
+                "        {\n" +
+                "          \"userMessage\":\"C\",\n" +
+                "          \"botAnswer\":\"JSON Answer: C\",\n" +
+                "          \"nodes\":[]\n" +
+                "        }\n" +
+                "      ]\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"userMessage\":\"B\",\n" +
@@ -138,7 +144,13 @@ public class utest_StateNode {
         Assert.assertFalse(node_A == null);
         Assert.assertEquals("A", node_A.question);
         Assert.assertEquals("JSON Answer: A", node_A.answer);
-        Assert.assertEquals(0, node_A.nodes.size());
+        Assert.assertEquals(1, node_A.nodes.size());
+
+        StateNode node_C = node_A.find("C");
+        Assert.assertFalse(node_C == null);
+        Assert.assertEquals("C", node_C.question);
+        Assert.assertEquals("JSON Answer: C", node_C.answer);
+        Assert.assertEquals(0, node_C.nodes.size());
 
         StateNode node_B = start.find("B");
         Assert.assertFalse(node_B == null);
