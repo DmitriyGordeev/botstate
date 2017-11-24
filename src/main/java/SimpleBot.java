@@ -9,10 +9,10 @@ public class SimpleBot extends TelegramLongPollingBot {
     private StateTree stateTree;
 
     public SimpleBot() {
-        test_exampleTree();
+        createTree();
     }
 
-    public void test_exampleTree() {
+    public void createTree() {
         stateTree = new StateTree("Hello there. How are ya?)");
 
         StateNode node_A = stateTree.root.connect("qA", "aA");
@@ -24,6 +24,7 @@ public class SimpleBot extends TelegramLongPollingBot {
         node_C.connect("qF", "aF");
         node_E.connect("qG", "aG");
     }
+
 
 
     /* default telegram stuff: */
