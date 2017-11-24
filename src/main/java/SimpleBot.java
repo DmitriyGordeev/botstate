@@ -10,7 +10,7 @@ public class SimpleBot extends TelegramLongPollingBot {
     private StateNode currentState;
 
     public SimpleBot() {
-        exp_createTree();
+        exp_createTree_2();
         currentState = stateTree.root;
     }
 
@@ -22,6 +22,19 @@ public class SimpleBot extends TelegramLongPollingBot {
         StateNode node_C = stateTree.start.connect("qC", "aC");
 
         node_B.connect("qD", "aD");
+        StateNode node_E =  node_C.connect("qE", "aE");
+        node_C.connect("qF", "aF");
+        node_E.connect("qG", "aG");
+    }
+
+    public void exp_createTree_2() {
+        stateTree = new StateTree("This is test tree! Be careful)");
+
+        StateNode node_A = stateTree.start.connect("Сколько времени", "Ваще хз");
+        StateNode node_B = stateTree.start.connect("Как дела?", "Норм, у тебя?");
+        StateNode node_C = stateTree.start.connect("qC", "aC");
+
+        node_B.connect("Хорошо", "Зачет!");
         StateNode node_E =  node_C.connect("qE", "aE");
         node_C.connect("qF", "aF");
         node_E.connect("qG", "aG");
