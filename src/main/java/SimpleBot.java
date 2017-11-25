@@ -2,8 +2,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import java.util.ArrayList;
 
 
 public class SimpleBot extends TelegramLongPollingBot {
@@ -68,7 +72,49 @@ public class SimpleBot extends TelegramLongPollingBot {
         return answer;
     }
 
+    private SendMessage setupKeyboard(long chat_id) {
 
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(true);
+
+        // Создаем клавиуатуру
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        // Создаем список строк клавиатуры
+        ArrayList<KeyboardRow> keyboard = new ArrayList<KeyboardRow>();
+
+        // Первая строчка клавиатуры
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add("Row 1");
+
+        // Вторая строчка клавиатуры
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add("Row 2");
+
+        // Третья строчка клавиатуры
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
+        keyboardThirdRow.add("Row 3");
+
+        KeyboardRow keyboardFourthRow = new KeyboardRow();
+        keyboardFourthRow.add("Row 4");
+
+        // Добавляем все строчки клавиатуры в список
+        keyboard.add(keyboardFirstRow);
+        keyboard.add(keyboardSecondRow);
+        keyboard.add(keyboardThirdRow);
+        keyboard.add(keyboardFourthRow);
+
+        // и устанваливаем этот список нашей клавиатуре
+        replyKeyboardMarkup.setKeyboard(keyboard);
+        sendMessage.setChatId(chat_id);
+//        sendMessage.setReplyToMessageId(message.getMessageId());
+
+        return sendMessage;
+    }
 
     /* ----------------------------------------------------------------------------- */
     /* default telegram stuff: */
@@ -85,10 +131,12 @@ public class SimpleBot extends TelegramLongPollingBot {
             // define the answer due to the stateTree:
             String answer = traversing(user_message);
 
+            SendMessage message = setupKeyboard(chat_id);
+            message.setText(answer);
 
-            SendMessage message = new SendMessage() // Create a message object object
-                    .setChatId(chat_id)
-                    .setText(answer);
+//            SendMessage message = new SendMessage() // Create a message object object
+//                    .setChatId(chat_id)
+//                    .setText(answer);
             try {
                 sendMessage(message); // Sending our message object to user
             } catch (TelegramApiException e) {
