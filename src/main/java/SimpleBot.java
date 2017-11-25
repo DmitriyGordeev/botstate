@@ -7,6 +7,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class SimpleBot extends TelegramLongPollingBot {
@@ -58,7 +59,7 @@ public class SimpleBot extends TelegramLongPollingBot {
         return answer;
     }
 
-    private ReplyKeyboardMarkup keyboard_A() {
+    private ReplyKeyboardMarkup setupKeyboard() {
 
         // Создаем клавиуатуру
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -90,37 +91,19 @@ public class SimpleBot extends TelegramLongPollingBot {
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;
     }
-    private ReplyKeyboardMarkup keyboard_B() {
 
-        // Создаем клавиуатуру
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
+    public ArrayList<KeyboardRow> createKeyboard(Vector<Vector<String>> keyboardContent) {
 
-        // Создаем список строк клавиатуры
         ArrayList<KeyboardRow> keyboard = new ArrayList<KeyboardRow>();
+        for(Vector<String> row : keyboardContent) {
+            KeyboardRow keyboardRow = new KeyboardRow();
+            for(String button : row) {
+                keyboardRow.add(button);
+            }
+            keyboard.add(keyboardRow);
+        }
 
-        // Первая строчка клавиатуры
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
-        keyboardFirstRow.add("Row B1");
-
-        // Вторая строчка клавиатуры
-        KeyboardRow keyboardSecondRow = new KeyboardRow();
-        keyboardSecondRow.add("Row B2");
-
-        // Третья строчка клавиатуры
-        KeyboardRow keyboardThirdRow = new KeyboardRow();
-        keyboardThirdRow.add("Row B3");
-
-        // Добавляем все строчки клавиатуры в список
-        keyboard.add(keyboardFirstRow);
-        keyboard.add(keyboardSecondRow);
-        keyboard.add(keyboardThirdRow);
-
-        // и устанваливаем этот список нашей клавиатуре
-        replyKeyboardMarkup.setKeyboard(keyboard);
-        return replyKeyboardMarkup;
+        return keyboard;
     }
 
     /* ----------------------------------------------------------------------------- */
@@ -143,13 +126,7 @@ public class SimpleBot extends TelegramLongPollingBot {
             message.setChatId(chat_id);
             message.enableMarkdown(true);
 
-            ReplyKeyboardMarkup keyboard = null;
-            if(user_message.equalsIgnoreCase("A")) {
-                keyboard = keyboard_A();
-            }
-            else {
-                keyboard = keyboard_B();
-            }
+            ReplyKeyboardMarkup keyboard = setupKeyboard();
 
 
             message.setReplyMarkup(keyboard);
