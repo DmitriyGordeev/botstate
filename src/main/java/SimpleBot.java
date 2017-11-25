@@ -1,5 +1,4 @@
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -16,7 +15,7 @@ public class SimpleBot extends TelegramLongPollingBot {
     private StateNode currentState;
 
     public SimpleBot() {
-        exp_createTree_2();
+        setupStateTree();
         currentState = stateTree.root;
     }
 
@@ -26,20 +25,7 @@ public class SimpleBot extends TelegramLongPollingBot {
         currentState = stateTree.root;
     }
 
-    public void exp_createTree() {
-        stateTree = new StateTree("Hello there. How are ya?)");
-
-        StateNode node_A = stateTree.start.connect("qA", "aA");
-        StateNode node_B = stateTree.start.connect("qB", "aB");
-        StateNode node_C = stateTree.start.connect("qC", "aC");
-
-        node_B.connect("qD", "aD");
-        StateNode node_E =  node_C.connect("qE", "aE");
-        node_C.connect("qF", "aF");
-        node_E.connect("qG", "aG");
-    }
-
-    public void exp_createTree_2() {
+    public void setupStateTree() {
         stateTree = new StateTree("This is test tree! Be careful)");
 
         StateNode node_A = stateTree.start.connect("Сколько времени", "Ваще хз");
@@ -72,7 +58,7 @@ public class SimpleBot extends TelegramLongPollingBot {
         return answer;
     }
 
-    private ReplyKeyboardMarkup createKeyboard() {
+    private ReplyKeyboardMarkup setupKeyboard() {
 
         // Создаем клавиуатуру
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -131,7 +117,7 @@ public class SimpleBot extends TelegramLongPollingBot {
             message.enableMarkdown(true);
 
 
-            ReplyKeyboardMarkup keyboard = createKeyboard();
+            ReplyKeyboardMarkup keyboard = setupKeyboard();
             message.setReplyMarkup(keyboard);
             message.setText(answer);
             try {
