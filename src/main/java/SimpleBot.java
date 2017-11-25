@@ -61,33 +61,17 @@ public class SimpleBot extends TelegramLongPollingBot {
 
     private ReplyKeyboardMarkup setupKeyboard() {
 
-        // Создаем клавиуатуру
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);
 
-        // Создаем список строк клавиатуры
+        // get keyboard info from current answer state:
         ArrayList<KeyboardRow> keyboard = new ArrayList<KeyboardRow>();
+        if(currentState != null) {
+            keyboard = createKeyboard(currentState.keyboard);
+        }
 
-        // Первая строчка клавиатуры
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
-        keyboardFirstRow.add("Row A1");
-
-        // Вторая строчка клавиатуры
-        KeyboardRow keyboardSecondRow = new KeyboardRow();
-        keyboardSecondRow.add("Row A2");
-
-        // Третья строчка клавиатуры
-        KeyboardRow keyboardThirdRow = new KeyboardRow();
-        keyboardThirdRow.add("Row A3");
-
-        // Добавляем все строчки клавиатуры в список
-        keyboard.add(keyboardFirstRow);
-        keyboard.add(keyboardSecondRow);
-        keyboard.add(keyboardThirdRow);
-
-        // и устанваливаем этот список нашей клавиатуре
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;
     }
