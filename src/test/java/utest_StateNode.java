@@ -1,8 +1,10 @@
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.Vector;
 
 public class utest_StateNode {
 
@@ -159,6 +161,38 @@ public class utest_StateNode {
         Assert.assertEquals("JSON Answer: B", node_B.answer);
         Assert.assertEquals(0, node_B.nodes.size());
 
+    }
+
+
+    @Test
+    public void test_DoubleArray() {
+
+        String jsonString =
+                "{" +
+                "\"keyboard\":[\n" +
+                "    [\"A\", \"B\"],\n" +
+                "    [\"C\", \"D\"]\n" +
+                "  ]" +
+                "}";
+
+        JSONObject json = new JSONObject(jsonString);
+        JSONArray arr = json.getJSONArray("keyboard");
+
+        Vector<Vector<String>> rows = new Vector<Vector<String>>();
+        for(Object r : arr)
+        {
+            JSONArray buttons = (JSONArray)r;
+            Vector<String> buttons_vector = new Vector<String>();
+            for(Object b : buttons) {
+                buttons_vector.add((String)b);
+            }
+            rows.add(buttons_vector);
+        }
+
+        Assert.assertEquals("A", rows.get(0).get(0));
+        Assert.assertEquals("B", rows.get(0).get(1));
+        Assert.assertEquals("C", rows.get(1).get(0));
+        Assert.assertEquals("D", rows.get(1).get(1));
     }
 
 }

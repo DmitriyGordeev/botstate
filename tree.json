@@ -1,6 +1,10 @@
 {
   "userMessage":"/start",
   "botAnswer":"Greetings from JSON!",
+  "keyboard":[
+    ["A", "B"],
+    ["C", "D"]
+  ],
   "nodes":[
     {
       "userMessage":"A",
