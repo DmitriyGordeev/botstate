@@ -114,14 +114,20 @@ public class utest_StateNode {
                 "{\n" +
                 "  \"userMessage\":\"/start\",\n" +
                 "  \"botAnswer\":\"Greetings from JSON!\",\n" +
+                "  \"keyboard\":[\n" +
+                "    [\"A\", \"B\"],\n" +
+                "    [\"C\", \"D\"]\n" +
+                "  ],\n" +
                 "  \"nodes\":[\n" +
                 "    {\n" +
                 "      \"userMessage\":\"A\",\n" +
                 "      \"botAnswer\":\"JSON Answer: A\",\n" +
+                "      \"keyboard\":[],\n" +
                 "      \"nodes\":[\n" +
                 "        {\n" +
                 "          \"userMessage\":\"C\",\n" +
                 "          \"botAnswer\":\"JSON Answer: C\",\n" +
+                "          \"keyboard\":[],\n" +
                 "          \"nodes\":[]\n" +
                 "        }\n" +
                 "      ]\n" +
@@ -129,6 +135,9 @@ public class utest_StateNode {
                 "    {\n" +
                 "      \"userMessage\":\"B\",\n" +
                 "      \"botAnswer\":\"JSON Answer: B\",\n" +
+                "      \"keyboard\":[\n" +
+                "        [\"E\", \"F\"]\n" +
+                "      ],\n" +
                 "      \"nodes\":[]\n" +
                 "    }\n" +
                 "  ]\n" +
@@ -142,25 +151,39 @@ public class utest_StateNode {
         Assert.assertEquals("/start", start.question);
         Assert.assertEquals("Greetings from JSON!", start.answer);
         Assert.assertEquals(2, start.nodes.size());
+        Assert.assertEquals("A", start.keyboard.get(0).get(0));
+        Assert.assertEquals("B", start.keyboard.get(0).get(1));
+        Assert.assertEquals("C", start.keyboard.get(1).get(0));
+        Assert.assertEquals("D", start.keyboard.get(1).get(1));
+
+
 
         StateNode node_A = start.find("A");
         Assert.assertFalse(node_A == null);
         Assert.assertEquals("A", node_A.question);
         Assert.assertEquals("JSON Answer: A", node_A.answer);
         Assert.assertEquals(1, node_A.nodes.size());
+        Assert.assertTrue(node_A.keyboard.isEmpty());
+
+
 
         StateNode node_C = node_A.find("C");
         Assert.assertFalse(node_C == null);
         Assert.assertEquals("C", node_C.question);
         Assert.assertEquals("JSON Answer: C", node_C.answer);
         Assert.assertEquals(0, node_C.nodes.size());
+        Assert.assertTrue(node_C.keyboard.isEmpty());
+
+
 
         StateNode node_B = start.find("B");
         Assert.assertFalse(node_B == null);
         Assert.assertEquals("B", node_B.question);
         Assert.assertEquals("JSON Answer: B", node_B.answer);
         Assert.assertEquals(0, node_B.nodes.size());
-
+        Assert.assertEquals(1, node_B.keyboard.size());
+        Assert.assertEquals("E", node_B.keyboard.get(0).get(0));
+        Assert.assertEquals("F", node_B.keyboard.get(0).get(1));
     }
 
 

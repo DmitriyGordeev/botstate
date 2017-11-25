@@ -5,11 +5,13 @@ import org.json.JSONObject;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.TreeSet;
+import java.util.Vector;
 
 class StateNode implements Comparable<StateNode> {
 
     public StateNode(String question, String answer, StateNode parent) {
         nodes = new TreeSet<StateNode>();
+        keyboard = new Vector<Vector<String>>();
         this.question = question;
         this.answer = answer;
         this.parent = parent;
@@ -50,6 +52,17 @@ class StateNode implements Comparable<StateNode> {
         question = object.getString("userMessage");
         answer = object.getString("botAnswer");
 
+        JSONArray arr = object.getJSONArray("keyboard");
+        for(Object r : arr)
+        {
+            JSONArray buttons = (JSONArray)r;
+            Vector<String> buttons_vector = new Vector<String>();
+            for(Object b : buttons) {
+                buttons_vector.add((String)b);
+            }
+            keyboard.add(buttons_vector);
+        }
+
         JSONArray nodes_array = object.getJSONArray("nodes");
         for(Object node : nodes_array) {
             StateNode sn = new StateNode("", "", null);
@@ -65,6 +78,7 @@ class StateNode implements Comparable<StateNode> {
 
     public String question;
     public String answer;
+    public Vector<Vector<String>> keyboard;
     public TreeSet<StateNode> nodes;
     public StateNode parent;
 }
