@@ -100,7 +100,8 @@ public class SimpleBot extends TelegramLongPollingBot {
         keyboardThirdRow.add("Row 3");
 
         KeyboardRow keyboardFourthRow = new KeyboardRow();
-        keyboardFourthRow.add("Row 4");
+        keyboardFourthRow.add("Row 4 _ A");
+        keyboardFourthRow.add("Row 5 _ B");
 
         // Добавляем все строчки клавиатуры в список
         keyboard.add(keyboardFirstRow);
@@ -114,6 +115,45 @@ public class SimpleBot extends TelegramLongPollingBot {
 //        sendMessage.setReplyToMessageId(message.getMessageId());
 
         return sendMessage;
+    }
+
+
+    private ReplyKeyboardMarkup exp_createKeyboard() {
+
+        // Создаем клавиуатуру
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        // Создаем список строк клавиатуры
+        ArrayList<KeyboardRow> keyboard = new ArrayList<KeyboardRow>();
+
+        // Первая строчка клавиатуры
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add("Row 1");
+
+        // Вторая строчка клавиатуры
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add("Row 2");
+
+        // Третья строчка клавиатуры
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
+        keyboardThirdRow.add("Row 3");
+
+        KeyboardRow keyboardFourthRow = new KeyboardRow();
+        keyboardFourthRow.add("Row 4 _ A");
+        keyboardFourthRow.add("Row 5 _ B");
+
+        // Добавляем все строчки клавиатуры в список
+        keyboard.add(keyboardFirstRow);
+        keyboard.add(keyboardSecondRow);
+        keyboard.add(keyboardThirdRow);
+        keyboard.add(keyboardFourthRow);
+
+        // и устанваливаем этот список нашей клавиатуре
+        replyKeyboardMarkup.setKeyboard(keyboard);
+        return replyKeyboardMarkup;
     }
 
     /* ----------------------------------------------------------------------------- */
@@ -131,7 +171,13 @@ public class SimpleBot extends TelegramLongPollingBot {
             // define the answer due to the stateTree:
             String answer = traversing(user_message);
 
-            SendMessage message = setupKeyboard(chat_id);
+            SendMessage message = new SendMessage();
+            message.setChatId(chat_id);
+            message.enableMarkdown(true);
+
+            ReplyKeyboardMarkup keyboard = exp_createKeyboard();
+            message.setReplyMarkup(keyboard);
+
             message.setText(answer);
 
 //            SendMessage message = new SendMessage() // Create a message object object
