@@ -30,7 +30,7 @@ public class Main {
             return;
         }
 
-        // Register our bot
+        // Register bot
         try {
             botsApi.registerBot(new SimpleBot(treeJson));
         }
