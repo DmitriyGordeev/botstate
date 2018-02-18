@@ -37,9 +37,6 @@ public class Main {
         catch (TelegramApiException e) {
             e.printStackTrace();
         }
-        catch(JSONException e) {
-            e.printStackTrace();
-        }
 
     }
 

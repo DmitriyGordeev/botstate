@@ -1,30 +1,37 @@
 {
   "userMessage":"/start",
-  "botAnswer":"Greetings from JSON!",
+  "botAnswer":"Приветствую! Я бот салона красоты.\n Вам доступны следующие команды:\n/services\n/contacts",
   "keyboard":[
-    ["A", "B"],
-    ["C", "D"]
+    [ "/services" ],
+    [ "/contacts" ]
   ],
   "nodes":[
     {
-      "userMessage":"A",
-      "botAnswer":"JSON Answer: A",
-      "keyboard":[],
+      "userMessage":"/services",
+      "botAnswer":"Вот наши услуги:\n/manicur\n/haircut",
+      "keyboard":[
+        ["/manicur"],
+        ["/haircut"]
+      ],
       "nodes":[
         {
-          "userMessage":"C",
-          "botAnswer":"JSON Answer: C",
-          "keyboard":[],
+          "userMessage":"/manicur",
+          "botAnswer":"Записано",
+          "keyboard": [],
+          "nodes":[]
+        },
+        {
+          "userMessage":"/haircut",
+          "botAnswer":"Записано",
+          "keyboard": [],
           "nodes":[]
         }
       ]
     },
     {
-      "userMessage":"B",
-      "botAnswer":"JSON Answer: B",
-      "keyboard":[
-        ["E", "F"]
-      ],
+      "userMessage":"/contacts",
+      "botAnswer":"+7 (495) 998-89-00",
+      "keyboard":[],
       "nodes":[]
     }
   ]
