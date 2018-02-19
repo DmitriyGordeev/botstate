@@ -115,6 +115,13 @@ public class SimpleBot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
 
+
+
+            // some bullshit for testing
+            stateTree.start.answer = "Для просомотра всех команд, наберите /help";
+
+
+
             // TODO: think about this state returning
             // if no subnodes found return to start state:
             if(currentState.nodes.isEmpty()) {
@@ -132,8 +139,6 @@ public class SimpleBot extends TelegramLongPollingBot {
                     e.printStackTrace();
                 }
             }
-
-
 
         }
 
