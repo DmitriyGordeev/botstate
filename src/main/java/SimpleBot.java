@@ -100,7 +100,6 @@ public class SimpleBot extends TelegramLongPollingBot {
             // define the answer due to the stateTree:
             String answer = traversing(user_message);
 
-
             SendMessage message = new SendMessage();
             message.setChatId(chat_id);
             message.enableMarkdown(true);
@@ -115,6 +114,27 @@ public class SimpleBot extends TelegramLongPollingBot {
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
+
+            // TODO: think about this state returning
+            // if no subnodes found return to start state:
+            if(currentState.nodes.isEmpty()) {
+                currentState = stateTree.start;
+                message = new SendMessage();
+                message.setChatId(chat_id);
+                message.enableMarkdown(true);
+
+                keyboard = setupKeyboard();
+                message.setReplyMarkup(keyboard);
+                message.setText(currentState.answer);
+                try {
+                    sendMessage(message); // Sending our message object to user
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
         }
 
     }
