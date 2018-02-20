@@ -76,6 +76,26 @@ public class SimpleBot extends TelegramLongPollingBot {
         return keyboard;
     }
 
+    public void sendBotMessage(long chat_id, String messageText) {
+        SendMessage message = new SendMessage();
+        message.setChatId(chat_id);
+        message.enableMarkdown(true);
+
+        ReplyKeyboardMarkup keyboard = setupKeyboard();
+        message.setReplyMarkup(keyboard);
+        message.setText(messageText);
+        try {
+            sendMessage(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // only text messages for now
+    public void executeActions(Vector<String> actions) {
+
+    }
+
     /* ----------------------------------------------------------------------------- */
     /* default telegram stuff: */
 
@@ -90,21 +110,10 @@ public class SimpleBot extends TelegramLongPollingBot {
 
             // define the answer due to the stateTree:
             String answer = traversing(user_message);
+            sendBotMessage(chat_id, answer);
 
-            SendMessage message = new SendMessage();
-            message.setChatId(chat_id);
-            message.enableMarkdown(true);
+            // handle actions:
 
-            ReplyKeyboardMarkup keyboard = setupKeyboard();
-
-
-            message.setReplyMarkup(keyboard);
-            message.setText(answer);
-            try {
-                sendMessage(message); // Sending our message object to user
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
 
 
 
@@ -112,23 +121,11 @@ public class SimpleBot extends TelegramLongPollingBot {
             stateTree.start.answer = "Для просомотра всех команд, наберите /help";
 
 
-
             // TODO: think about this state returning
             // if no subnodes found return to start state:
             if(currentState.nodes.isEmpty()) {
                 currentState = stateTree.start;
-                message = new SendMessage();
-                message.setChatId(chat_id);
-                message.enableMarkdown(true);
-
-                keyboard = setupKeyboard();
-                message.setReplyMarkup(keyboard);
-                message.setText(currentState.answer);
-                try {
-                    sendMessage(message); // Sending our message object to user
-                } catch (TelegramApiException e) {
-                    e.printStackTrace();
-                }
+                sendBotMessage(chat_id, currentState.answer);
             }
 
         }
