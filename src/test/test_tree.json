@@ -1,0 +1,35 @@
+{
+  "userMessage":"/start",
+  "botAnswer":"Greetings from JSON!",
+  "keyboard":[
+    ["A", "B"],
+    ["C", "D"]
+  ],
+  "actions": ["One", "Two", "Three"],
+  "nodes":[
+    {
+      "userMessage":"A",
+      "botAnswer":"JSON Answer: A",
+      "keyboard":[],
+      "actions": ["One", "Two", "Three"],
+      "nodes":[
+        {
+          "userMessage":"C",
+          "botAnswer":"JSON Answer: C",
+          "keyboard":[],
+          "actions": ["One", "Two", "Three"],
+          "nodes":[]
+        }
+      ]
+    },
+    {
+      "userMessage":"B",
+      "botAnswer":"JSON Answer: B",
+      "keyboard":[
+        ["E", "F"]
+      ],
+      "actions": ["One", "Two", "Three"],
+      "nodes":[]
+    }
+  ]
+}

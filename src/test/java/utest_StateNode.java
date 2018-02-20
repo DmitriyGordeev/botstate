@@ -13,6 +13,7 @@ public class utest_StateNode {
         StateNode node = new StateNode("Question", "Answer", null, new Vector<String>());
         Assert.assertEquals("Question", node.question);
         Assert.assertEquals(null, node.parent);
+        Assert.assertTrue(node.actions.isEmpty());
         Assert.assertTrue(node.nodes.isEmpty());
     }
 
@@ -108,7 +109,7 @@ public class utest_StateNode {
 
 
     @Test
-    public void parseJsonObject_correctRecursivity() {
+    public void parseJsonObject_correctRecurse() {
 
         String jsonString =
                 "{\n" +
@@ -118,16 +119,19 @@ public class utest_StateNode {
                 "    [\"A\", \"B\"],\n" +
                 "    [\"C\", \"D\"]\n" +
                 "  ],\n" +
+                "  \"actions\": [\"One\", \"Two\", \"Three\"],\n" +
                 "  \"nodes\":[\n" +
                 "    {\n" +
                 "      \"userMessage\":\"A\",\n" +
                 "      \"botAnswer\":\"JSON Answer: A\",\n" +
                 "      \"keyboard\":[],\n" +
+                "      \"actions\": [\"One\", \"Two\", \"Three\"],\n" +
                 "      \"nodes\":[\n" +
                 "        {\n" +
                 "          \"userMessage\":\"C\",\n" +
                 "          \"botAnswer\":\"JSON Answer: C\",\n" +
                 "          \"keyboard\":[],\n" +
+                "          \"actions\": [\"One\", \"Two\", \"Three\"],\n" +
                 "          \"nodes\":[]\n" +
                 "        }\n" +
                 "      ]\n" +
@@ -138,6 +142,7 @@ public class utest_StateNode {
                 "      \"keyboard\":[\n" +
                 "        [\"E\", \"F\"]\n" +
                 "      ],\n" +
+                "      \"actions\": [\"One\", \"Two\", \"Three\"],\n" +
                 "      \"nodes\":[]\n" +
                 "    }\n" +
                 "  ]\n" +
@@ -155,6 +160,11 @@ public class utest_StateNode {
         Assert.assertEquals("B", start.keyboard.get(0).get(1));
         Assert.assertEquals("C", start.keyboard.get(1).get(0));
         Assert.assertEquals("D", start.keyboard.get(1).get(1));
+
+        Assert.assertEquals(3, start.actions.size());
+        Assert.assertEquals("One", start.actions.get(0));
+        Assert.assertEquals("Two", start.actions.get(1));
+        Assert.assertEquals("Three", start.actions.get(2));
 
 
 
