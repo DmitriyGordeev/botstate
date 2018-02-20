@@ -2,19 +2,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.TreeSet;
-import java.util.Vector;
+import java.util.*;
 
 class StateNode implements Comparable<StateNode> {
 
-    public StateNode(String question, String answer, StateNode parent) {
+    public StateNode(String question, String answer, StateNode parent, Vector<String> actions) {
         nodes = new TreeSet<StateNode>();
         keyboard = new Vector<Vector<String>>();
         this.question = question;
         this.answer = answer;
         this.parent = parent;
+        this.actions = actions;
     }
 
     public void connect(StateNode node) {
@@ -22,8 +20,8 @@ class StateNode implements Comparable<StateNode> {
         node.parent = this;
     }
 
-    public StateNode connect(String question, String answer) {
-        StateNode node = new StateNode(question, answer, this);
+    public StateNode connect(String question, String answer, Vector<String> actions) {
+        StateNode node = new StateNode(question, answer, this, actions);
         nodes.add(node);
         return node;
     }
@@ -63,9 +61,14 @@ class StateNode implements Comparable<StateNode> {
             keyboard.add(buttons_vector);
         }
 
+        JSONArray actions_array = object.getJSONArray("actions");
+        for(Object a : actions_array) {
+            actions.add((String)a);
+        }
+
         JSONArray nodes_array = object.getJSONArray("nodes");
         for(Object node : nodes_array) {
-            StateNode sn = new StateNode("", "", null);
+            StateNode sn = new StateNode("", "", null, new Vector<String>());
             connect(sn.parseJsonObject((JSONObject) node));
         }
 
@@ -81,13 +84,15 @@ class StateNode implements Comparable<StateNode> {
     public Vector<Vector<String>> keyboard;
     public TreeSet<StateNode> nodes;
     public StateNode parent;
+
+    public Vector<String>  actions;
 }
 
 public class StateTree {
 
     public StateTree(String helloMessage) {
-        root = new StateNode("", "", null);
-        start = root.connect("/start", helloMessage);
+        root = new StateNode("", "", null, new Vector<String>());
+        start = root.connect("/start", helloMessage, new Vector<String>());
     }
 
     public void parseTreeJson(String jsonString) throws JSONException {

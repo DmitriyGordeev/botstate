@@ -5,6 +5,7 @@
     [ "/services" ],
     [ "/contacts" ]
   ],
+  "actions": ["One", "Two", "Three"],
   "nodes":[
     {
       "userMessage":"/services",
@@ -13,17 +14,20 @@
         ["/manicur"],
         ["/haircut"]
       ],
+      "actions": ["One", "Two", "Three"],
       "nodes":[
         {
           "userMessage":"/manicur",
           "botAnswer":"Записано",
           "keyboard": [],
+          "actions": ["One", "Two", "Three"],
           "nodes":[]
         },
         {
           "userMessage":"/haircut",
           "botAnswer":"Записано",
           "keyboard": [],
+          "actions": ["One", "Two", "Three"],
           "nodes":[]
         }
       ]
@@ -32,6 +36,7 @@
       "userMessage":"/contacts",
       "botAnswer":"+7 (495) 998-89-00",
       "keyboard":[],
+      "actions": ["One", "Two", "Three"],
       "nodes":[]
     }
   ]

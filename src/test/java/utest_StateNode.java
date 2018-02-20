@@ -10,7 +10,7 @@ public class utest_StateNode {
 
     @Test
     public void constructor() {
-        StateNode node = new StateNode("Question", "Answer", null);
+        StateNode node = new StateNode("Question", "Answer", null, new Vector<String>());
         Assert.assertEquals("Question", node.question);
         Assert.assertEquals(null, node.parent);
         Assert.assertTrue(node.nodes.isEmpty());
@@ -19,8 +19,8 @@ public class utest_StateNode {
 
     @Test
     public void connect_ref() {
-        StateNode node = new StateNode("Question", "Answer", null);
-        StateNode otherNode = new StateNode("ChildQ", "ChildA", null);
+        StateNode node = new StateNode("Question", "Answer", null, new Vector<String>());
+        StateNode otherNode = new StateNode("ChildQ", "ChildA", null, new Vector<String>());
         node.connect(otherNode);
 
         Assert.assertEquals(1, node.nodes.size());
@@ -31,8 +31,8 @@ public class utest_StateNode {
     @Test
     public void connect_value() {
 
-        StateNode node = new StateNode("Question", "Answer", null);
-        StateNode childNode = node.connect("ChildQ", "ChildA");
+        StateNode node = new StateNode("Question", "Answer", null, new Vector<String>());
+        StateNode childNode = node.connect("ChildQ", "ChildA", new Vector<String>());
 
         Assert.assertFalse(childNode == null);
         Assert.assertEquals("ChildQ", childNode.question);
@@ -54,10 +54,10 @@ public class utest_StateNode {
 
     @Test
     public void find_notNull() {
-        StateNode node = new StateNode("Question", "Answer", null);
+        StateNode node = new StateNode("Question", "Answer", null, new Vector<String>());
 
         String test_value = "ChildQ";
-        node.connect(test_value, "ChildA");
+        node.connect(test_value, "ChildA", new Vector<String>());
 
         StateNode found = node.find(test_value);
         Assert.assertTrue(found != null);
@@ -67,10 +67,10 @@ public class utest_StateNode {
 
     @Test
     public void find_null() {
-        StateNode node = new StateNode("Question", "Answer", null);
+        StateNode node = new StateNode("Question", "Answer", null, new Vector<String>());
 
         String test_value = "ChildQ";
-        node.connect(test_value, "ChildA");
+        node.connect(test_value, "ChildA", new Vector<String>());
 
         StateNode found = node.find("random");
         Assert.assertTrue(found == null);
@@ -79,10 +79,10 @@ public class utest_StateNode {
 
     @Test
     public void findAnswer_notEmpty() {
-        StateNode node = new StateNode("Question", "Answer", null);
+        StateNode node = new StateNode("Question", "Answer", null, new Vector<String>());
 
         String test_question = "ChildQ";
-        node.connect(test_question, "ChildA");
+        node.connect(test_question, "ChildA", new Vector<String>());
 
         String answer = node.findAnswer(test_question);
         Assert.assertEquals("ChildA", answer);
@@ -91,10 +91,10 @@ public class utest_StateNode {
 
     @Test
     public void findAnswer_empty() {
-        StateNode node = new StateNode("Question", "Answer", null);
+        StateNode node = new StateNode("Question", "Answer", null, new Vector<String>());
 
         String test_question = "ChildQ";
-        node.connect(test_question, "ChildA");
+        node.connect(test_question, "ChildA", new Vector<String>());
 
         String answer = node.findAnswer("Random Question");
         Assert.assertEquals("", answer);
@@ -109,7 +109,7 @@ public class utest_StateNode {
 
     @Test
     public void parseJsonObject_correctRecursivity() {
-        
+
         String jsonString =
                 "{\n" +
                 "  \"userMessage\":\"/start\",\n" +
@@ -145,7 +145,7 @@ public class utest_StateNode {
 
 
         JSONObject json = new JSONObject(jsonString);
-        StateNode start = new StateNode("", "", null);
+        StateNode start = new StateNode("", "", null, new Vector<String>());
         start.parseJsonObject(json);
 
         Assert.assertEquals("/start", start.question);
