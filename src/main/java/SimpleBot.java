@@ -91,9 +91,11 @@ public class SimpleBot extends TelegramLongPollingBot {
         }
     }
 
-    // only text messages for now
-    public void executeActions(Vector<String> actions) {
-
+    // only text messages for now (Vector<Action> action in future)
+    public void executeActions(long chat_id, Vector<String> actions) {
+        for(String a : actions) {
+            sendBotMessage(chat_id, a);
+        }
     }
 
     /* ----------------------------------------------------------------------------- */
@@ -113,8 +115,7 @@ public class SimpleBot extends TelegramLongPollingBot {
             sendBotMessage(chat_id, answer);
 
             // handle actions:
-
-
+            executeActions(chat_id, currentState.actions);
 
 
             // some bullshit for testing
